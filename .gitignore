@@ -1,0 +1,8 @@
+.vscode
+.idea
+__pycahe__
+*.pyc
+*.pyo
+*/__pycahe__
+*.csv
+*.xlsx
