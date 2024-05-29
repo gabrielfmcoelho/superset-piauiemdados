@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="static/report_style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ title }}</h1>
+        <h3>{{ subtitle }}</h3>
+    </div>
+    <table class="data-table">
+        <tr>
+            <th>City</th>
+            <th>Amount</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.city }}</td>
+            <td>{{ item.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

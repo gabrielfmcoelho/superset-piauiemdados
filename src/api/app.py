@@ -21,7 +21,8 @@ app.add_middleware(
     )
 
 
-from router import router as main_router
+from routes.populatedb import router as populatedb_router
+from routes.report import router as report_router
 
 
 try:
@@ -29,4 +30,15 @@ try:
 except Exception as e:
     print(e)
 
-app.include_router(main_router)
+
+@app.get("/")
+async def root():
+    return {"message": "Bem-vindo a API de gerenciamento de dados do Piauí em Dados"}
+
+@app.post("/api/ping")
+async def root_post():
+    return {"data":"pong"}
+
+
+app.include_router(populatedb_router)
+app.include_router(report_router)

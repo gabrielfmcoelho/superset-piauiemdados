@@ -25,7 +25,7 @@ def read_csv(filename: str):
     #ic(os.getcwd())
     #ic(os.listdir())
     #ic(os.listdir("datasets/preprocessed"))
-    df = pd.read_csv(f'datasets/preprocessed/{filename}.csv', sep=";", decimal=",", encoding="utf-8")
+    df = pd.read_csv(f'datasets/final/{filename}-final.csv', sep=";", decimal=",", encoding="utf-8")
     ic(df.info())
     return df
 
@@ -45,7 +45,7 @@ def get_db_session():
 )
 async def populate_opening_companies():
     ic("Populating opening companies")
-    df = read_csv("empresas-aberturas")
+    df = read_csv("aberturas")
     with get_db_session() as db:
         for index, row in df.iterrows():
             company = OpeningCompany(
@@ -64,10 +64,9 @@ async def populate_opening_companies():
                 db.commit()
                 db.refresh(company)
             except IntegrityError as e:
-                
-            db.add(company)
-            db.commit()
-            db.refresh(company)
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
     return {"message": "Dados de empresas abertas inseridos com sucesso"}
 
 @router.get(
@@ -76,7 +75,7 @@ async def populate_opening_companies():
 )
 async def populate_opening_companies_activities():
     ic("Populating opening companies activities")
-    df = read_csv("empresas_aberturas_atividades")
+    df = read_csv("atividades-aberturas")
     with get_db_session() as db:
         for index, row in df.iterrows():
             activity = OpeningCompanyActivities(
@@ -86,9 +85,14 @@ async def populate_opening_companies_activities():
                 segment=row["seguimento"],
                 amount=row["qtd"]
             )
-            db.add(activity)
-            db.commit()
-            db.refresh(activity)
+            try:
+                db.add(activity)
+                db.commit()
+                db.refresh(activity)
+            except IntegrityError as e:
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
     return {"message": "Dados de atividades de empresas abertas inseridos com sucesso"}
 
 @router.get(
@@ -97,7 +101,7 @@ async def populate_opening_companies_activities():
 )
 async def populate_opening_companies_time_series():
     ic("Populating opening companies time series")
-    df = read_csv("empresas_aberturas_serie_historica")
+    df = read_csv("tempo-aberturas")
     with get_db_session() as db:
         for index, row in df.iterrows():
             time_series = OpeningCompanyTimeSeries(
@@ -111,15 +115,15 @@ async def populate_opening_companies_time_series():
                 cp_address=row["cp_endereco"],
                 cp_total=row["cp_total"],
                 register=row["registro"],
-                hh=row["hh"],
-                mm=row["mm"],
-                ss=row["ss"],
-                register_hours_duration=row["registro_hr"],
-                register_minutes_duration=row["registro_min"]
             )
-            db.add(time_series)
-            db.commit()
-            db.refresh(time_series)
+            try:
+                db.add(time_series)
+                db.commit()
+                db.refresh(time_series)
+            except IntegrityError as e:
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
     return {"message": "Dados de séries temporais de empresas abertas inseridos com sucesso"}
 
 @router.get(
@@ -140,9 +144,14 @@ async def populate_active_companies():
                 is_branch=row["filial"],
                 amount=row["qtd"]
             )
-            db.add(company)
-            db.commit()
-            db.refresh(company)
+            try:
+                db.add(company)
+                db.commit()
+                db.refresh(company)
+            except IntegrityError as e:
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
     return {"message": "Dados de empresas ativas inseridos com sucesso"}
 
 @router.get(
@@ -162,9 +171,14 @@ async def populate_active_companies_activities():
                 segment=row["seguimento"],
                 amount=row["qtd"]
             )
-            db.add(activity)
-            db.commit()
-            db.refresh(activity)
+            try:
+                db.add(activity)
+                db.commit()
+                db.refresh(activity)
+            except IntegrityError as e:
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
     return {"message": "Dados de atividades de empresas ativas inseridos com sucesso"}
 
 @router.get(

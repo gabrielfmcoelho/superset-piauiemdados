@@ -79,11 +79,11 @@ class OpeningCompanyTimeSeries(db_base):
     city = Column(String(255), nullable=False)
     register_hours_duration = Column(Float, nullable=False)
 
-    def __init__(self, year, month, serial_identifier, nature_type_code, nature_type_descr, city, cp_name, cp_address, cp_total, register, hh, mm, ss, register_hours_duration, register_minutes_duration):
+    def __init__(self, year, month, serial_identifier, nature_type_code, nature_type_descr, city, cp_name, cp_address, cp_total, register):
         self.year = year
         self.month = month
         self.serial_identifier = serial_identifier
         self.nature_type_code = nature_type_code
         self.nature_type_descr = nature_type_descr
         self.city = city
-        self.register_hours_duration = register_hours_duration
+        self.register_hours_duration = register
