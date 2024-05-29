@@ -1,13 +1,14 @@
-from pydantic import BaseModel
-from typing import Set, List
+from fastapi import Query
+from pydantic import BaseModel, Field
+from typing import Set, List, Optional
 
 class Filter(BaseModel):
-    values: Set[str] | None
+    values: Set[str] | None = Field(None)
 
 class DashboardFilters(BaseModel):
-    year: Filter | None
-    city: Filter | None
-    nature_type_descr: Filter | None
+    year: Optional[Filter] = Field(Query(None))
+    city: Optional[Filter] = Field(Query(None))
+    nature_type_descr: Optional[Filter] = Field(Query(None))
 
 class Indicator(BaseModel):
     value: str
