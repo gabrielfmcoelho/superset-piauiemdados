@@ -27,7 +27,15 @@ def get_db_session():
         db.close()
 
 def parse_filters(opening_filters: DashboardFilters, filter_name: str | None = None) -> dict:
-    _ = {k: v for k, v in opening_filters.dict().items() if v is not None}
+    _ = {}
+    for key, value in opening_filters.dict().items():
+        if value is not None and value != {}:
+            if key == "year":
+                _["year"] = value.values
+            elif key == "nature_type_descr":
+                _["nature_type_descr"] = value.values
+            elif key == "city":
+                _["city"] = value.values
     if filter_name:
         _.pop(filter_name, None)
     return _

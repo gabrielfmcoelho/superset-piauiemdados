@@ -23,6 +23,39 @@ db_connector = Connector.get_instance()
 db_base = db_connector.get_base()
 
 
+class Opening(db_base):
+    __tablename__ = "openings"
+    id = Column(Integer, primary_key=True, index=True)
+    hash_key = Column(String(255), nullable=False)
+    year = Column(Integer, nullable=False)
+    month = Column(Integer, nullable=False)
+    size = Column(String(255), nullable=False)
+    nature_type_code = Column(String(255), nullable=False)
+    nature_type_descr = Column(String(255), nullable=False)
+    city = Column(String(255), nullable=False)
+    is_branch = Column(Boolean, nullable=False)
+    amount_x = Column(Integer, nullable=False)
+    cnae = Column(String(255), nullable=False)
+    cnae_descr = Column(String(255), nullable=False)
+    segment = Column(String(255), nullable=False)
+    amount_y = Column(Integer, nullable=False)
+
+    def __init__(self, hash_key, year, month, size, nature_type_code, nature_type_descr, city, is_branch, amount_x, cnae, cnae_descr, segment, amount_y):
+        self.hash_key = hash_key
+        self.year = year
+        self.month = months[month]
+        self.size = size
+        self.nature_type_code = nature_type_code
+        self.nature_type_descr = nature_type_descr
+        self.city = city
+        self.is_branch = True if is_branch == "Sim" else False
+        self.amount_x = amount_x
+        self.cnae = cnae
+        self.cnae_descr = cnae_descr
+        self.segment = segment
+        self.amount_y = amount_y
+
+
 class OpeningCompany(db_base):
     __tablename__ = "opening_companies"
 

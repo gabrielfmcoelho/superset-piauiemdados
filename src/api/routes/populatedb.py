@@ -6,7 +6,7 @@ from icecream import ic
 import os
 import pandas as pd
 
-from models.opening_companies import OpeningCompany, OpeningCompanyActivities, OpeningCompanyTimeSeries
+from models.opening_companies import OpeningCompany, OpeningCompanyActivities, OpeningCompanyTimeSeries, Opening
 from models.active_companies import ActiveCompany, ActiveCompanyActivities
 from database.connector import Connector
 
@@ -182,13 +182,47 @@ async def populate_active_companies_activities():
     return {"message": "Dados de atividades de empresas ativas inseridos com sucesso"}
 
 @router.get(
+    "/opening",
+    response_model=dict,
+)
+async def populate_opening():
+    ic("Populating opening")
+    df = read_csv("opening")
+    with get_db_session() as db:
+        for index, row in df.iterrows():
+            opening = Opening(
+                hash_key=row["hash_chave_abertura"],
+                year=row["ano"],
+                month=row["mês"],
+                size=row["porte"],
+                nature_type_code=row["cod_natureza"],
+                nature_type_descr=row["descr_natureza"],
+                city=row["municipio"],
+                is_branch=row["filial"],
+                amount_x=row["qtd_x"],
+                cnae=row["cod_atividade"],
+                cnae_descr=row["descr_atividade"],
+                segment=row["seguimento"],
+                amount_y=row["qtd_y"]
+            )
+            try:
+                db.add(opening)
+                db.commit()
+                db.refresh(opening)
+            except IntegrityError as e:
+                ic(f"Duplicated hash found, ignoring it: {row}")
+                db.rollback()
+                continue
+    return {"message": "Dados de aberturas inseridos com sucesso"}
+
+@router.get(
     "/all",
     response_model=dict,
 )
 async def populate_all():
     ic("Populating all")
-    await populate_opening_companies()
-    await populate_opening_companies_activities()
+    #await populate_opening_companies()
+    #await populate_opening_companies_activities()
     await populate_opening_companies_time_series()
     await populate_active_companies()
     await populate_active_companies_activities()
