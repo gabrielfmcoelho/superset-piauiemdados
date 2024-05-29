@@ -43,6 +43,7 @@ async def get_filter(
     ic("Getting filters")
     with get_db_session() as db:
         filters = parse_filters(opening_filters, filter_name)
+        print(filters)
         # get available values for each filter given its context
         # if no context is given, return all available values
         # OpeningCompany + OpeningCompanyActivities
