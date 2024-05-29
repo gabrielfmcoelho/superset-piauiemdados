@@ -5,9 +5,11 @@ class Filter(BaseModel):
     values: Set[str] | None
 
 class DashboardFilters(BaseModel):
-    year: Filter
-    city: Filter
-    nature_type_descr: Filter
+    year: Filter | None
+    city: Filter | None
+    nature_type_descr: Filter | None
+
+class Indicator(BaseModel):
+    value: str
 
 class Chart(BaseModel):
-    
