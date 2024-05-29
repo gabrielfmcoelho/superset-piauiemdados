@@ -23,6 +23,7 @@ app.add_middleware(
 
 from routes.populatedb import router as populatedb_router
 from routes.report import router as report_router
+from routes.dashboard import router as dashboard_router
 
 
 try:
@@ -42,3 +43,4 @@ async def root_post():
 
 app.include_router(populatedb_router)
 app.include_router(report_router)
+app.include_router(dashboard_router)
