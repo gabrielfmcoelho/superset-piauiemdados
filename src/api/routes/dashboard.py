@@ -38,7 +38,7 @@ def parse_filters(opening_filters: DashboardFilters, filter_name: str | None = N
 )
 async def get_filter(
     filter_name: str,
-    opening_filters: DashboardFilters,
+    opening_filters: DashboardFilters = DashboardFilters()
 ) -> Filter:
     ic("Getting filters")
     with get_db_session() as db:
@@ -71,7 +71,7 @@ async def get_filter(
     response_model=DashboardFilters,
 )
 async def get_all_filters(
-    opening_filters: DashboardFilters,
+    opening_filters: DashboardFilters = DashboardFilters()
 ) -> DashboardFilters:
     ic("Getting all filters")
     with get_db_session() as db:
