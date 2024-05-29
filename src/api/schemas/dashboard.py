@@ -11,5 +11,3 @@ class DashboardFilters(BaseModel):
 
 class Indicator(BaseModel):
     value: str
-
-class Chart(BaseModel):
