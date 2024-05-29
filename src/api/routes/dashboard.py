@@ -55,7 +55,12 @@ async def get_filter(
             query = db.query(OpeningCompany.city)
 
         if filters != {} and filters != None:
-            query = query.filter_by(**filters)
+            if "year" in filters:
+                query = query.filter_by(year=filters["year"])
+            if "nature_type_descr" in filters:
+                query = query.filter_by(nature_type_descr=filters["nature_type_descr"])
+            if "city" in filters:
+                query = query.filter_by(city=filters["city"])
 
         available_values = query.distinct().all()
         for value in available_values:
