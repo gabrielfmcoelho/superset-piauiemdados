@@ -112,11 +112,72 @@ class OpeningCompanyTimeSeries(db_base):
     city = Column(String(255), nullable=False)
     register_hours_duration = Column(Float, nullable=False)
 
-    def __init__(self, year, month, serial_identifier, nature_type_code, nature_type_descr, city, cp_name, cp_address, cp_total, register):
+    def __init__(self, year, month, serial_identifier, nature_type_code, nature_type_descr, city, cp_name, cp_address, cp_total, register_hours_duration):
         self.year = year
         self.month = month
         self.serial_identifier = serial_identifier
         self.nature_type_code = nature_type_code
         self.nature_type_descr = nature_type_descr
         self.city = city
-        self.register_hours_duration = register
+        self.register_hours_duration = register_hours_duration
+
+
+OPENING_COMPANIES_DICTIONARY = {
+    "aberturas": {
+        "schema": OpeningCompany,
+        "dict": {
+            "hash_key": "hash_chave_abertura",
+            "year": "ano",
+            "month": "mês",
+            "size": "porte",
+            "nature_type_code": "cod_natureza",
+            "nature_type_descr": "descr_natureza",
+            "city": "municipio",
+            "is_branch": "filial",
+            "amount": "qtd",
+        }
+    },
+    "atividades-aberturas": {
+        "schema": OpeningCompanyActivities,
+        "dict": {
+            "hash_key": "hash_chave_abertura",
+            "cnae": "cod_atividade",
+            "cnae_descr": "descr_atividade",
+            "segment": "seguimento",
+            "amount": "qtd",
+        }
+    },
+    "tempo-aberturas": {
+        "schema": OpeningCompanyTimeSeries,
+        "dict": {
+            "year": "ano",
+            "month": "mês",
+            "serial_identifier": "serial",
+            "nature_type_code": "cod_natureza",
+            "nature_type_descr": "natureza",
+            "city": "municipio",
+            "cp_name": "cp_nome",
+            "cp_address": "cp_endereco",
+            "cp_total": "cp_total",
+            "register_hours_duration": "registro",
+        }
+    },
+    "opening": {
+        "schema": Opening,
+        "dict": {
+            "hash_key": "hash_chave_abertura",
+            "year": "ano",
+            "month": "mês",
+            "size": "porte",
+            "nature_type_code": "cod_natureza",
+            "nature_type_descr": "descr_natureza",
+            "city": "municipio",
+            "is_branch": "filial",
+            "amount_x": "qtd_x",
+            "cnae": "cod_atividade",
+            "cnae_descr": "descr_atividade",
+            "segment": "seguimento",
+            "amount_y": "qtd_y",
+        }
+    }
+}

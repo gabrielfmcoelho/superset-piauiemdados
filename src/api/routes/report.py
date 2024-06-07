@@ -1,8 +1,11 @@
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from icecream import ic
+from datetime import datetime as dt
 
-from handlers.report_builder import build_report
+from handlers.report_builder import ReportBuilder
+from models.report import ReportRequest
+from mock.report_data import MOCK_REPORT_DATA as mock_data
 
 
 router = APIRouter(
@@ -15,24 +18,18 @@ router = APIRouter(
     "/generate",
 )
 async def generate_report(
+    report_data: ReportRequest,
 ):
     ic("Generating report")
-    report_data = None
-    if not report_data:
-        #return {"message": "No data to generate report"}
-        report_data = {
-            "title": "Relatório de empresas ativas",
-            "subtitle": "Relatório de empresas ativas por município",
-            "data": [
-                {
-                    "city": "Teresina",
-                    "amount": 1000
-                },
-                {
-                    "city": "Parnaíba",
-                    "amount": 500
-                }
-            ]
-        }
-    pdf = build_report(report_data)
-    return StreamingResponse(pdf, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=relatorio.pdf"})
+    report_data = report_data.dict() if report_data else mock_data
+
+    report_data["metadata"] = {
+        "title": "Relatório de Desenvolvimento",
+        "subtitle": " | ".join(report_data["data"].keys()),
+        "date": dt.now().strftime("%d/%m/%Y"),
+    }
+
+    pdf_builder = ReportBuilder(report_data)
+    pdf_file = pdf_builder.build_report()
+
+    return StreamingResponse(pdf_file, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=relatorio.pdf"})

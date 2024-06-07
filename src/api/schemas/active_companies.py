@@ -49,3 +49,30 @@ class ActiveCompanyActivities(db_base):
         self.is_main_cnae = True if is_main_cnae == "Sim" else False
         self.segment = segment
         self.amount = amount
+
+
+ACTIVE_COMPANIES_DICTIONARY = {
+    "empresas-ativas": {
+        "schema": ActiveCompany,
+        "dict": {
+            "hash_key": "hash_chave",
+            "size": "porte",
+            "nature_type_code": "cod_natureza",
+            "nature_type_descr": "natureza",
+            "city": "municipio",
+            "is_branch": "filial",
+            "amount": "qtd",
+        }
+    },
+    "empresas-ativas-atividades": {
+        "schema": ActiveCompanyActivities,
+        "dict": {
+            "hash_key": "hash_chave",
+            "cnae": "cod_atividade",
+            "cnae_descr": "descr_atividade",
+            "is_main_cnae": "principal",
+            "segment": "seguimento",
+            "amount": "qtd",
+        }
+    }
+}

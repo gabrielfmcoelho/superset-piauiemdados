@@ -30,7 +30,7 @@ services:
     volumes:
       - ./datasets:/app/datasets
     ports:
-      - "8000:8000"
+      - "8050:8050"
     environment:
       DATABASE_URL: postgresql://piauiemdadosuser:piauiemdadospass@postgres:5432/piauiemdados
 
