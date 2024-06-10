@@ -23,7 +23,7 @@ app.add_middleware(
 
 from routes.populatedb import router as populatedb_router
 from routes.report import router as report_router
-from routes.dashboard import router as dashboard_router
+#from routes.dashboard import router as dashboard_router
 
 
 try:
