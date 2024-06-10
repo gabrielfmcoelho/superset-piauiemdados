@@ -43,4 +43,4 @@ async def root_post():
 
 app.include_router(populatedb_router)
 app.include_router(report_router)
-app.include_router(dashboard_router)
+#app.include_router(dashboard_router)
