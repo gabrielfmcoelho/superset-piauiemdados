@@ -1,4 +1,4 @@
-dataLabels = {
+MOCK_DATA_LABELS = {
   "Municípios": {
     "nm_mun": "Nome do Município",
     "area_km2": "Área em Km²",
