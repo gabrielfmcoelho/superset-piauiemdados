@@ -116,7 +116,7 @@ class ReportBuilder:
             <table border="1">
                     <thead>
                         {
-                            '<tr>' + ''.join([f'<th width="25%">{label}</th>' for label in labels.values()]) + '</tr>'
+                            '<tr>' + ''.join([f'<th>{label}</th>' for label in labels.values()]) + '</tr>'
                         }
                     </thead>
                 <tbody>
