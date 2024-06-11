@@ -205,7 +205,7 @@ class ReportBuilder:
             map_image,
             ReportConfig.document_width/3-10,
             self.pdf.get_y(),
-            ReportConfig.document_width/3+20,
+            ReportConfig.document_width/3+25,
             ReportConfig.document_width/3+30
             )
         self.pdf.ln(ReportConfig.document_width/3+40)
