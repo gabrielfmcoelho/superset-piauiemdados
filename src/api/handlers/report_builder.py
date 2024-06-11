@@ -8,6 +8,8 @@ import os
 from icecream import ic
 from enum import Enum
 
+from mock.report_data_labels import MOCK_DATA_LABELS as mock_labels
+
 
 class ReportConfig:
     document_width: int = 211
@@ -91,6 +93,7 @@ class ReportBuilder:
         self.pdf.set_font(**ReportConfig.get_complete_font_style(font_style))
         self.pdf.set_text_color(**font_color.value)
         self.pdf.write(5, text)
+        self.pdf.cell()
         if has_line_break:
             self.pdf.ln(line_break_spaces)
     
@@ -106,22 +109,18 @@ class ReportBuilder:
         self.pdf.set_draw_color(**ReportConfig.Colors.BLACK.value)
         self.pdf.ln(5)
 
-    def _write_simple_table(self, dict_data: dict) -> None:
-        df = ReportBuilder._parse_data_to_table(dict_data)
-        for col in df.columns:
-            self._write_content_text(
-                f'{col}: ',
-                ReportConfig.FontStyles.TEXT,
-                ReportConfig.Colors.BLACK,
-                ReportConfig.default_line_break_spaces,
-                False
-                )
-            self._write_content_text(
-                f'{df[col].values[0]}',
-                ReportConfig.FontStyles.TEXT,
-                ReportConfig.Colors.GRAY,
-                ReportConfig.default_line_break_spaces
-                )
+    def _write_simple_table(self, dict_values: dict, dict_key: str) -> None:
+        df = ReportBuilder._parse_data_to_table(dict_values)
+        labels = mock_labels[dict_key]
+        with self.pdf.table() as table:
+            for col in df.columns:
+                row = table.row()
+                self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.HEADER_TEXT))
+                self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
+                row.cell(0, 10, labels[col], border=1)
+                self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.CELL_TEXT))
+                self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
+                row.cell(0, 10, df[col].values[0], border=1)
     
     @staticmethod
     def _parse_data_to_table(dict_data: dict) -> pd.DataFrame:
@@ -203,7 +202,7 @@ class ReportBuilder:
                 ReportConfig.default_line_break_spaces
                 )
             self._write_divisory_line()
-            self._write_simple_table(value)
+            self._write_simple_table(value, key)
             self.pdf.ln(ReportConfig.default_line_break_spaces)
 
     def build_report(self):
