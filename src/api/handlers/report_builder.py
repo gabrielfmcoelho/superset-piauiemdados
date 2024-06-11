@@ -93,7 +93,6 @@ class ReportBuilder:
         self.pdf.set_font(**ReportConfig.get_complete_font_style(font_style))
         self.pdf.set_text_color(**font_color.value)
         self.pdf.write(5, text)
-        self.pdf.cell()
         if has_line_break:
             self.pdf.ln(line_break_spaces)
     
