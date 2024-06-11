@@ -117,10 +117,10 @@ class ReportBuilder:
                 self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.HEADER_TEXT))
                 self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
                 label = labels[col] if col in labels.keys() else col
-                row.cell(0, 10, label, border=1)
+                row.cell(0, 10, label)
                 self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.CELL_TEXT))
                 self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
-                row.cell(0, 10, df[col].values[0], border=1)
+                row.cell(0, 10, df[col].values[0])
     
     @staticmethod
     def _parse_data_to_table(dict_data: dict) -> pd.DataFrame:
