@@ -124,7 +124,7 @@ class ReportBuilder:
                     </thead>
                 <tbody>
                     {
-                        df.to_html(index=False, header=False)
+                        ''.join([f'<tr>{"".join([f"<td>{df[column].values[0]}</td>" for column in df.columns])}</tr>' for i in range(len(df))])
                     }
                 </tbody>
             </table>""",
