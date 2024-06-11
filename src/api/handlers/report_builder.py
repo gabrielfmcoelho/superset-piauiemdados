@@ -117,7 +117,7 @@ class ReportBuilder:
         self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
         def get_row(value):
             if "," in value:
-                return f"<td>{value.replace(',', '<br/>')}</td>"
+                return f"<td>{value.replace(',', '\n')}</td>"
             return f"<td>{value}</td>"
         list_of_rows = "".join(
                             [
