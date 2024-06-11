@@ -23,7 +23,7 @@ async def generate_report(
     ic("Generating report")
     report_data = report_data.dict() if report_data else mock_data
 
-    report_data["screenshot"] = report_data["screenshot"].replace("data:image/png;base64,", "")
+    report_data["screenshot"] = report_data["screenshot"].replace("data:image/jpeg;base64,", "")
     ic(report_data["screenshot"][:10])
 
     report_data["metadata"] = {
