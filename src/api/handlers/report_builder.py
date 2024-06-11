@@ -111,16 +111,23 @@ class ReportBuilder:
     def _write_simple_table(self, dict_values: dict, dict_key: str) -> None:
         df = ReportBuilder._parse_data_to_table(dict_values)
         labels = mock_labels[dict_key]
-        with self.pdf.table() as table:
-            for col in df.columns:
-                row = table.row()
-                self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.HEADER_TEXT))
-                self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
-                label = labels[col] if col in labels.keys() else col
-                row.cell(0, 10, label)
-                self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.CELL_TEXT))
-                self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
-                row.cell(0, 10, df[col].values[0])
+        self.pdf.write_html(
+            f"""
+            <table border="1">
+                    <thead>
+                        {
+                            '<tr>' + ''.join([f'<th width="25%">{label}</th>' for label in labels.values()]) + '</tr>'
+                        }
+                    </thead>
+                <tbody>
+                    {
+                        '<tr>' + ''.join([f'<td>{value}</td>' for value in df.values[0]]) + '</tr>'
+                    }
+                </tbody>
+            </table>""",
+                table_line_separators=True,
+        )
+                
     
     @staticmethod
     def _parse_data_to_table(dict_data: dict) -> pd.DataFrame:
