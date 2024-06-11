@@ -177,9 +177,13 @@ class ReportBuilder:
         )
         self._write_divisory_line()
         # save base64 image to .png file
+        ic("encoding...")
         img_data = map_image_base64.encode()
+        ic("decoding...")
         img_content = base64.b64decode(img_data)
+        ic("writing to bytes...")
         map_image = BytesIO(img_content)
+        ic("plotting image...")
         # image centered in the page
         self.pdf.image(
             map_image,
@@ -212,10 +216,13 @@ class ReportBuilder:
             self.report_data["metadata"]["date"]
             )
         
-        self._create_map_section(
-            "Mapa do Estado:",
-            self.report_data["screenshot"]
-            )
+        try:
+            self._create_map_section(
+                "Mapa do Estado:",
+                self.report_data["screenshot"]
+                )
+        except:
+            ic("Map image unprocessable")
         
         self._create_data_sections(
             self.report_data["data"]
