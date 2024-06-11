@@ -115,12 +115,7 @@ class ReportBuilder:
         df = df[labels_keys]
         self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.CELL_TEXT))
         self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
-        self.pdf.write_html(
-            f"""
-            <table border="1" cellpadding="2" cellspacing="0">
-                <tbody>
-                    {
-                        "".join(
+        list_of_rows = "".join(
                             [
                                 f"""
                                 <tr>
@@ -131,11 +126,16 @@ class ReportBuilder:
                                 for col in labels_keys
                             ]
                         )
-
+        self.pdf.write_html(
+            f"""
+            <table border="1" cellpadding="2" cellspacing="0">
+                <tbody>
+                    {
+                        list_of_rows
                     }
                 </tbody>
             </table>""",
-                table_line_separators=True,
+            table_line_separators=True,
         )
                 
     
