@@ -120,8 +120,6 @@ class ReportBuilder:
             <table border="1" cellpadding="2" cellspacing="0">
                 <tbody>
                     {
-                        # the first column is the df col then its row value
-                        # the fist column must be bold then the rest of the columns are normal
                         "".join(
                             [
                                 f"""
