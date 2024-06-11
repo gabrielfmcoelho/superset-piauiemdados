@@ -119,7 +119,7 @@ class ReportBuilder:
                             [
                                 f"""
                                 <tr>
-                                    <font size="8" color="black"><td>{labels[col]}</td></font>
+                                    <font color="black"><td>{labels[col]}</td></font>
                                     <td>{df[col].values[0]}</td>
                                 </tr>
                                 """
