@@ -124,7 +124,7 @@ class ReportBuilder:
                     </thead>
                 <tbody>
                     {
-                        ''.join([f'<tr>{"".join([f"<td>{df[column].values[0]}</td>" for column in df.columns])}</tr>' for i in range(len(df))])
+                        '<font size="8">' + ''.join([f'<tr>{"".join([f"<td>{df[column].values[0]}</td>" for column in df.columns])}</tr>' for i in range(len(df))]) + '</font>'
                     }
                 </tbody>
             </table>""",
