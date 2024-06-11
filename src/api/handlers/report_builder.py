@@ -111,17 +111,20 @@ class ReportBuilder:
     def _write_simple_table(self, dict_values: dict, dict_key: str) -> None:
         df = ReportBuilder._parse_data_to_table(dict_values)
         labels = mock_labels[dict_key]
+        labels_keys = list(labels.keys())
+        df = df[labels_keys]
+        
         self.pdf.write_html(
             f"""
             <table border="1">
                     <thead>
                         {
-                            '<tr>' + ''.join([f'<th>{label}</th>' for label in labels.values()]) + '</tr>'
+                            '<font size="8"><tr>' + ''.join([f'<th>{labels[column]}</th>' for column in df.columns]) + '</tr></font>'
                         }
                     </thead>
                 <tbody>
                     {
-                        '<tr>' + ''.join([f'<td>{value}</td>' for value in df.values[0]]) + '</tr>'
+                        df.to_html(index=False, header=False)
                     }
                 </tbody>
             </table>""",
