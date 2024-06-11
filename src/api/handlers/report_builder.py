@@ -113,18 +113,27 @@ class ReportBuilder:
         labels = mock_labels[dict_key]
         labels_keys = list(labels.keys())
         df = df[labels_keys]
-        
+        self.pdf.set_font(**ReportConfig.get_complete_font_style(ReportConfig.FontStyles.CELL_TEXT))
+        self.pdf.set_text_color(**ReportConfig.Colors.BLACK.value)
         self.pdf.write_html(
             f"""
-            <table border="1">
-                    <thead>
-                        {
-                            '<font size="8"><tr>' + ''.join([f'<th>{labels[column]}</th>' for column in df.columns]) + '</tr></font>'
-                        }
-                    </thead>
+            <table border="1" cellpadding="2" cellspacing="0">
                 <tbody>
                     {
-                        '<font size="8">' + ''.join([f'<tr>{"".join([f"<td>{df[column].values[0]}</td>" for column in df.columns])}</tr>' for i in range(len(df))]) + '</font>'
+                        # the first column is the df col then its row value
+                        # the fist column must be bold then the rest of the columns are normal
+                        "".join(
+                            [
+                                f"""
+                                <tr>
+                                    <font size="8" color="black"><td>{labels[col]}</td></font>
+                                    <td>{df[col].values[0]}</td>
+                                </tr>
+                                """
+                                for col in labels_keys
+                            ]
+                        )
+
                     }
                 </tbody>
             </table>""",
