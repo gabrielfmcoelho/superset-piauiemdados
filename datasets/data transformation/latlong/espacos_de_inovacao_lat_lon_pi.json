@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Nome do HUB": "HUB De Hidrogênio Verde", "Municipio": "Parnaíba", "Latitude": -2.90336, "Longitude": -41.778171 }, "geometry": { "type": "Point", "coordinates": [ -41.778171, -2.90336 ] } },
+{ "type": "Feature", "properties": { "Nome do HUB": "Tech Export HUB", "Municipio": "Parnaíba", "Latitude": -2.90336, "Longitude": -41.778171 }, "geometry": { "type": "Point", "coordinates": [ -41.778171, -2.90336 ] } },
+{ "type": "Feature", "properties": { "Nome do HUB": "HUB Investe Piauí", "Municipio": "Teresina", "Latitude": -5.086342, "Longitude": -42.80527 }, "geometry": { "type": "Point", "coordinates": [ -42.80527, -5.086342 ] } }
+]
+}

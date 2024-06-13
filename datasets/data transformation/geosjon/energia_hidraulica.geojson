@@ -1,0 +1,6 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "lat": -6.75349577, "lon": -43.56267317, "name": "Boa Esperança (Antiga Castelo Branco)", "Potência Outorgada (kW)": "  237,300.00 ", "Potência Fiscalizada (kW)": "  237,300.00 ", "Garantia Fisica (kW)": "  135,900.00 ", "Entrada em Operação": "02/10/1970", "fase": "Operação", "Tipo de Atuação": "Concessão", "ceg": "UHE.PH.PI.000267-4" }, "geometry": { "type": "Point", "coordinates": [ -43.56267317, -6.75349577 ] } }
+]
+}
